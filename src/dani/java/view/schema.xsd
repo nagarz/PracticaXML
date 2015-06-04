@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.xtec.cat/ProgramacioAula"
+
+	xmlns:tns="http://www.xtec.cat/ProgramacioAula" elementFormDefault="unqualified"
+
+	attributeFormDefault="unqualified">
+
+	<element name="programacioAula" type="tns:ProgramacioAula"></element>
+
+	<complexType name="ProgramacioAula">
+		<sequence>
+			<element name="resum" type="tns:Resum"></element>
+			<element name="unitatsFormatives" type="tns:UnitatsFormatives"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Resum">
+		<sequence>
+			<element name="familia" type="string"></element>
+			<element name="cicle" type="tns:Cicle"></element>
+			<element name="modul" type="tns:Modul"></element>
+			<element name="titular" type="tns:Titular"></element>
+			<element name="torn" type="tns:Torn"></element>
+			<element name="grup" type="string"></element>
+			<element name="programacioComuna" type="string"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="UnitatsFormatives">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="unitatFormativa" type="tns:UnitatFormativa"></element>
+		</sequence>
+		<attribute name="modul-ref" type="IDREF"></attribute>
+	</complexType>
+
+	<complexType name="UnitatFormativa">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="nom" type="string"></element>
+			<element name="hores" type="integer"></element>
+			<element name="horesLliureDisposicio" type="integer"></element>
+			<element name="dataInici" type="date"></element>
+			<element name="dataFinal" type="date"></element>
+			<element name="formula" type="string"></element>
+			<element name="nuclisFormatius" type="tns:NuclisFormatius"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="NuclisFormatius">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="nucliFormatiu" type="tns:NucliFormatiu"></element>
+		</sequence>
+		<attribute name="unitatFormativa-ref" type="IDREF"></attribute>
+	</complexType>
+
+	<complexType name="NucliFormatiu">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="nom" type="string"></element>
+			<element name="hores" type="integer"></element>
+			<element name="horesLliureDisposicio" type="integer"></element>
+			<!-- element name="durada" type="string"></element -->
+			<element name="dataInici" type="date"></element>
+			<element name="dataFinal" type="date"></element>
+			<element name="activitatsEnsenyamentAprenentatge" type="tns:ActivitatsEnsenyamentAprenentatge"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ActivitatsEnsenyamentAprenentatge">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="activitatEnsenyamentAprenentatge" type="tns:ActivitatEnsenyamentAprenentatge"></element>
+		</sequence>
+		<attribute name="nucliFormatiu-ref" type="IDREF"></attribute>
+	</complexType>
+
+	<complexType name="ActivitatEnsenyamentAprenentatge">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="nom" type="string"></element>
+			<element name="hores" type="integer"></element>
+			<element name="descripcio" type="string"></element>
+			<element name="resultatsAprenentatge" type="tns:ResultatsAprenentatge"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ResultatsAprenentatge">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="resultatAprenentatge" type="tns:ResultatAprenentatge"></element>
+		</sequence>
+		<attribute name="activitatEnsenyamentAprenentatge-ref" type="IDREF"></attribute>
+	</complexType>
+
+	<complexType name="ResultatAprenentatge">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="nom" type="string"></element>
+			<element name="data" type="date"></element>
+			<element name="percentatge" type="double"></element>
+			<element name="continguts" type="tns:Continguts"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Continguts">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="contingut" type="tns:Contingut"></element>
+		</sequence>
+		<attribute name="resultatAprenentatge-ref" type="IDREF"></attribute>
+	</complexType>
+
+	<complexType name="Contingut">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="ident" type="integer"></element>
+			<element name="nom" type="string"></element>
+			<element name="criterisAvaluacio" type="tns:CriterisAvaluacio"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="CriterisAvaluacio">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="criteriAvaluacio" type="tns:CriteriAvaluacio"></element>
+		</sequence>
+		<attribute name="resultatAprenentatge-ref" type="IDREF"></attribute>
+	</complexType>
+
+	<complexType name="CriteriAvaluacio">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="ident" type="integer"></element>
+			<element name="nom" type="string"></element>
+			<element name="instrumentsAvaluacio" type="tns:InstrumentsAvaluacio"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="InstrumentsAvaluacio">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="instrumentAvaluacio" type="tns:InstrumentAvaluacio"></element>
+		</sequence>
+		<attribute name="criteriAvaluacio-ref" type="IDREF"></attribute>
+	</complexType>
+
+	<complexType name="InstrumentAvaluacio">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="ident" type="integer"></element>
+			<element name="tipusProva" type="tns:TipusProva"></element>
+			<element name="nom" type="string"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Cicle">
+		<sequence>
+			<element name="nom" type="string"></element>
+			<element name="grau" type="tns:Grau"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Modul">
+		<sequence>
+			<element name="id" type="ID"></element>
+			<element name="nom" type="string"></element>
+			<element name="codi" type="integer"></element>
+			<element name="horesTotals" type="int"></element>
+			<element name="horesLliureDisposicio" type="int"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Titular">
+		<sequence>
+			<element name="nom" type="string"></element>
+		</sequence>
+		<attribute default="docent" name="carrec" type="string"></attribute>
+	</complexType>
+
+	<simpleType name="Grau">
+		<restriction base="string">
+			<enumeration value="GM"></enumeration>
+			<enumeration value="GS"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="Torn">
+		<restriction base="string">
+			<enumeration value="Mati"></enumeration>
+			<enumeration value="Tarda"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TipusProva">
+		<restriction base="string">
+			<enumeration value="Prova teorica"></enumeration>
+			<enumeration value="Prova practica"></enumeration>
+			<enumeration value="Altres"></enumeration>
+		</restriction>
+	</simpleType>
+
+
+</schema>
