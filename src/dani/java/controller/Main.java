@@ -1,5 +1,6 @@
-package dani.java.view;
+package dani.java.controller;
 	
+import dani.java.view.AplicationView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -8,13 +9,10 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
 		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			stage.setScene(AplicationView.mainScene());
+			stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
