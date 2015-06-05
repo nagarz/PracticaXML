@@ -10,11 +10,10 @@ import dani.java.model.ProgramacioAula;
 
 public class XMLParser {
 	
-	@SuppressWarnings("unused")
-	private static ProgramacioAula readXML(File file) {
+	public static ProgramacioAula readXML(File file) {
 		ProgramacioAula programacioAula = null;
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(ProgramacioAula.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(dani.java.model.ObjectFactory.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			programacioAula = (ProgramacioAula) jaxbUnmarshaller.unmarshal(file);
 			

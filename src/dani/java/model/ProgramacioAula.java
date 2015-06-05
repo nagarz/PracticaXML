@@ -11,6 +11,7 @@ package dani.java.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -35,10 +36,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProgramacioAula", propOrder = {
+@XmlType(name = "ProgramacioAula",namespace="http://www.xtec.cat/ProgramacioAula", propOrder = {
     "resum",
     "unitatsFormatives"
 })
+@XmlRootElement(name = "programacioAula")
 public class ProgramacioAula {
 
     @XmlElement(required = true)
