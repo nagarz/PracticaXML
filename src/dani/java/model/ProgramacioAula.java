@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProgramacioAula",namespace="http://www.xtec.cat/ProgramacioAula", propOrder = {
+@XmlType(name = "programacioAula",namespace="http://www.xtec.cat/ProgramacioAula", propOrder = {
     "resum",
     "unitatsFormatives"
 })
