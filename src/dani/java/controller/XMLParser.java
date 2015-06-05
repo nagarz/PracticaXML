@@ -1,43 +1,26 @@
 package dani.java.controller;
 
 import java.io.File;
-import java.io.IOException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import dani.java.model.ProgramacioAula;
 
 public class XMLParser {
 	
-	private static void readXML(File file) {
+	@SuppressWarnings("unused")
+	private static ProgramacioAula readXML(File file) {
+		ProgramacioAula programacioAula = null;
 		try {
-			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = documentBuilder.parse(file);
-			Element root = doc.getDocumentElement();
-			if (!root.getTagName().equals("programacioAula")) {
-				
-			} else {
-				NodeList progAulaList = root.getElementsByTagName("programacioAula");
-				int numNodes = progAulaList.getLength();
-				for (int i = 0; i<numNodes; i++) {
-					Node resum = progAulaList.item(i);
-				}
-				
-			}
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			JAXBContext jaxbContext = JAXBContext.newInstance(ProgramacioAula.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			programacioAula = (ProgramacioAula) jaxbUnmarshaller.unmarshal(file);
+			
+		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
+		return programacioAula;
 	}
 }
