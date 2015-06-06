@@ -29,7 +29,11 @@ public class AplicationView {
 				fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Arxius XML", "*.xml"));
 				File file = fileChooser.showOpenDialog(scene.getWindow());
 				programacioAula = XMLParser.readXML(file);
-				System.out.println(programacioAula.getResum().getGrup());
+				System.out.println(programacioAula == null);
+				System.out.println(programacioAula.getResum() == null);
+				System.out.println(programacioAula.getUnitatsFormatives() == null);
+				System.out.println(programacioAula.getUnitatsFormatives().getUnitatFormativa() == null);
+				System.out.println(programacioAula.getUnitatsFormatives().getModulRef() == null);
 			}
 		});
 		gridPane.add(button, 0, 0);

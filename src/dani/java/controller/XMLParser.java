@@ -15,7 +15,7 @@ public class XMLParser {
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(dani.java.model.ObjectFactory.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			programacioAula = (ProgramacioAula) jaxbUnmarshaller.unmarshal(file);
+			programacioAula = (ProgramacioAula) ((javax.xml.bind.JAXBElement) jaxbUnmarshaller.unmarshal(file)).getValue();
 			
 		} catch (JAXBException e) {
 			e.printStackTrace();
