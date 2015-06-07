@@ -11,7 +11,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			stage.setScene(AplicationView.mainScene());
+			stage.setScene(AplicationView.resumScene());
 			stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
