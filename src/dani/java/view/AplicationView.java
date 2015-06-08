@@ -17,6 +17,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -40,6 +41,8 @@ public class AplicationView {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private static ObservableList<UnitatFormativa> ufList;
 	private static ObservableList<NucliFormatiu> nfList;
+	private static ObservableList<String> nfStringList;
+	private static NucliFormatiu nf;
 	static Screen screen = Screen.getPrimary();
 	static Rectangle2D bounds = screen.getVisualBounds();
 
@@ -593,8 +596,91 @@ public class AplicationView {
 		}
 		
 		ComboBox<String> comboBox = new ComboBox<>();
-
-
+		nfStringList.clear();
+		for (NucliFormatiu nucliFormatiu:uf.getNuclisFormatius().getNucliFormatiu()) {
+			nfStringList.add(nucliFormatiu.getId());
+		}
+		comboBox.setItems(nfStringList);
+		gridPane.add(comboBox, 0, 2);
+		
+		TextField nomText = new TextField();
+		gridPane.add(nomText, 1, 2);
+		
+		Label hLabel = new Label("Hores");
+		gridPane.add(hLabel, 0, 3);
+		
+		TextField hTextField = new TextField();
+		gridPane.add(hTextField, 1, 3);
+		
+		Label iniciLabel = new Label("Inici");
+		gridPane.add(iniciLabel, 2, 3);
+		
+		TextField iniciTextField = new TextField();
+		gridPane.add(iniciTextField, 3, 3);
+		
+		Label fiLabel = new Label("Fi");
+		gridPane.add(fiLabel, 4, 3);
+		
+		TextField fiTextField = new TextField();
+		gridPane.add(fiTextField, 5, 3);
+		
+		Text actText = new Text("Activitats");
+		gridPane.add(actText, 0, 4);
+		
+		Label nomActLabel = new Label("Nom");
+		gridPane.add(nomActLabel, 0, 5);
+		
+		TextField nomTextField = new TextField();
+		gridPane.add(nomTextField, 1, 5);
+		
+		Label hActLabel = new Label("Hores");
+		gridPane.add(hActLabel, 2, 5);
+		
+		TextField hActTextField = new TextField();
+		gridPane.add(hActTextField, 3, 5);
+		
+		Label descActLabel = new Label("Descripció");
+		gridPane.add(descActLabel, 4, 5);
+		
+		TextField descActTextField = new TextField();
+		gridPane.add(descActTextField, 5, 5);
+		
+		Text resApreText = new Text("Resultat d'aprenentatge");
+		gridPane.add(resApreText, 0, 6);
+		
+		Label nomResLabel = new Label("Nom");
+		gridPane.add(nomResLabel, 0, 6);
+		
+		TextField nomResField = new TextField();
+		gridPane.add(nomResField, 1, 6);
+		
+		Label dataLabel = new Label("Data Lliurament");
+		gridPane.add(dataLabel, 2, 6);
+		
+		TextField dataTextField = new TextField();
+		gridPane.add(dataTextField, 3, 6);
+		
+		Label percLabel = new Label("Percentatge");
+		gridPane.add(percLabel, 4, 6);
+		
+		TextField percTextField = new TextField();
+		gridPane.add(percTextField, 5, 6);
+		
+		Text contText = new Text("Continguts");
+		gridPane.add(contText, 0, 7);
+		
+		TextArea contArea = new TextArea();
+		gridPane.add(contArea, 0, 8);
+		
+		Text critText = new Text("Criteris d'avaluació");
+		gridPane.add(critText, 3, 7);
+		
+		TextArea critArea = new TextArea();
+		gridPane.add(critArea, 3, 8);
+		
+		Text instText = new Text("Instrument d'avaluació");
+		gridPane.add(instText, 0, 9);
+		
 		return scene;
 	}
 }
