@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -23,6 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import dani.java.controller.Main;
@@ -38,6 +40,8 @@ public class AplicationView {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private static ObservableList<UnitatFormativa> ufList;
 	private static ObservableList<NucliFormatiu> nfList;
+	static Screen screen = Screen.getPrimary();
+	static Rectangle2D bounds = screen.getVisualBounds();
 
 	public static Scene resumScene() {
 		GridPane gridPane = new GridPane();
@@ -66,6 +70,10 @@ public class AplicationView {
 			public void handle(Event event) {
 				stage.setScene(resumScene());
 				if (stage.isMaximized()) {
+					stage.setX(bounds.getMinX());
+					stage.setY(bounds.getMinY());
+					stage.setWidth(bounds.getWidth());
+					stage.setHeight(bounds.getHeight());
 					Scale scale = new Scale();
 					scale.setPivotX(0);
 					scale.setPivotY(0);
@@ -84,6 +92,10 @@ public class AplicationView {
 				stage.setScene(modulScene());
 				if (stage.isMaximized()) {
 					Scale scale = new Scale();
+					stage.setX(bounds.getMinX());
+					stage.setY(bounds.getMinY());
+					stage.setWidth(bounds.getWidth());
+					stage.setHeight(bounds.getHeight());
 					scale.setPivotX(0);
 					scale.setPivotY(0);
 					scale.setX(3);
@@ -108,6 +120,10 @@ public class AplicationView {
 					public void handle(Event event) {
 						stage.setScene(ufScene(uf));
 						if (stage.isMaximized()) {
+							stage.setX(bounds.getMinX());
+							stage.setY(bounds.getMinY());
+							stage.setWidth(bounds.getWidth());
+							stage.setHeight(bounds.getHeight());
 							Scale scale = new Scale();
 							scale.setPivotX(0);
 							scale.setPivotY(0);
@@ -234,6 +250,10 @@ public class AplicationView {
 			public void handle(Event event) {
 				stage.setScene(resumScene());
 				if (stage.isMaximized()) {
+					stage.setX(bounds.getMinX());
+					stage.setY(bounds.getMinY());
+					stage.setWidth(bounds.getWidth());
+					stage.setHeight(bounds.getHeight());
 					Scale scale = new Scale();
 					scale.setPivotX(0);
 					scale.setPivotY(0);
@@ -251,6 +271,10 @@ public class AplicationView {
 			public void handle(Event event) {
 				stage.setScene(modulScene());
 				if (stage.isMaximized()) {
+					stage.setX(bounds.getMinX());
+					stage.setY(bounds.getMinY());
+					stage.setWidth(bounds.getWidth());
+					stage.setHeight(bounds.getHeight());
 					Scale scale = new Scale();
 					scale.setPivotX(0);
 					scale.setPivotY(0);
@@ -276,6 +300,10 @@ public class AplicationView {
 					public void handle(Event event) {
 						stage.setScene(ufScene(uf));
 						if (stage.isMaximized()) {
+							stage.setX(bounds.getMinX());
+							stage.setY(bounds.getMinY());
+							stage.setWidth(bounds.getWidth());
+							stage.setHeight(bounds.getHeight());
 							Scale scale = new Scale();
 							scale.setPivotX(0);
 							scale.setPivotY(0);
@@ -498,6 +526,10 @@ public class AplicationView {
 			public void handle(Event event) {
 				stage.setScene(resumScene());
 				if (stage.isMaximized()) {
+					stage.setX(bounds.getMinX());
+					stage.setY(bounds.getMinY());
+					stage.setWidth(bounds.getWidth());
+					stage.setHeight(bounds.getHeight());
 					Scale scale = new Scale();
 					scale.setPivotX(0);
 					scale.setPivotY(0);
@@ -515,6 +547,10 @@ public class AplicationView {
 			public void handle(Event event) {
 				stage.setScene(modulScene());
 				if (stage.isMaximized()) {
+					stage.setX(bounds.getMinX());
+					stage.setY(bounds.getMinY());
+					stage.setWidth(bounds.getWidth());
+					stage.setHeight(bounds.getHeight());
 					Scale scale = new Scale();
 					scale.setPivotX(0);
 					scale.setPivotY(0);
@@ -540,6 +576,10 @@ public class AplicationView {
 					public void handle(Event event) {
 						stage.setScene(ufScene(uf));
 						if (stage.isMaximized()) {
+							stage.setX(bounds.getMinX());
+							stage.setY(bounds.getMinY());
+							stage.setWidth(bounds.getWidth());
+							stage.setHeight(bounds.getHeight());
 							Scale scale = new Scale();
 							scale.setPivotX(0);
 							scale.setPivotY(0);
