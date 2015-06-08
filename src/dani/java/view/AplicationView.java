@@ -2,8 +2,7 @@ package dani.java.view;
 
 import java.text.SimpleDateFormat;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -15,11 +14,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -27,7 +23,6 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import dani.java.controller.Main;
 import dani.java.model.NucliFormatiu;
 import dani.java.model.UnitatFormativa;
@@ -35,13 +30,13 @@ import dani.java.model.UnitatsFormatives;
 
 public class AplicationView {
 
-	private static UnitatsFormatives ufs;
-	private static UnitatFormativa uf;
+	public static UnitatsFormatives ufs = new UnitatsFormatives();
+	public static UnitatFormativa uf;
 	private static Stage stage = Main.stage;
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	private static ObservableList<UnitatFormativa> ufList;
-	private static ObservableList<NucliFormatiu> nfList;
-	private static ObservableList<String> nfStringList;
+	private static ObservableList<UnitatFormativa> ufList = FXCollections.observableArrayList();
+	private static ObservableList<NucliFormatiu> nfList = FXCollections.observableArrayList();
+	private static ObservableList<String> nfStringList = FXCollections.observableArrayList();
 	private static NucliFormatiu nf;
 	static Screen screen = Screen.getPrimary();
 	static Rectangle2D bounds = screen.getVisualBounds();
@@ -51,9 +46,10 @@ public class AplicationView {
 		gridPane.setVgap(20);
 		gridPane.setHgap(20);
 		gridPane.setPadding(new Insets(20,20,20,20));
-		Scene scene = new Scene(gridPane, 640, 400);
+		Scene scene = new Scene(gridPane, 711, 400);
 
 		Text titolText = new Text("PROGRAMACIÓ DE L'ÀULA");
+		titolText.setStyle("-fx-font-size: 16");
 		HBox hbox0 = new HBox();
 		hbox0.getChildren().add(titolText);
 		hbox0.setPadding(new Insets(0,200,0,200));
@@ -117,6 +113,7 @@ public class AplicationView {
 				sep = new Separator();
 				sep.setOrientation(Orientation.VERTICAL);
 				navHbox.getChildren().addAll(newText, sep);
+				GridPane.setColumnSpan(navHbox, 4);
 				newText.setOnMouseClicked(new EventHandler<Event>() {
 
 					@Override
@@ -228,12 +225,13 @@ public class AplicationView {
 	@SuppressWarnings("unchecked")
 	private static Scene modulScene() {
 		GridPane gridPane = new GridPane();
-		Scene scene = new Scene(gridPane, 640, 400);
+		Scene scene = new Scene(gridPane, 711, 400);
 		gridPane.setVgap(20);
 		gridPane.setHgap(20);
 		gridPane.setPadding(new Insets(20,20,20,20));
 
 		Text titolText = new Text("RELACIÓ D'UNITATS FORMATIVES I MÒDULS FORMATIUS");
+		titolText.setStyle("-fx-font-size: 16");
 		HBox hbox0 = new HBox();
 		hbox0.getChildren().add(titolText);
 		hbox0.setPadding(new Insets(0,200,0,120));
@@ -297,6 +295,7 @@ public class AplicationView {
 				sep = new Separator();
 				sep.setOrientation(Orientation.VERTICAL);
 				navHbox.getChildren().addAll(newText, sep);
+				GridPane.setColumnSpan(navHbox, 4);
 				newText.setOnMouseClicked(new EventHandler<Event>() {
 
 					@Override
@@ -345,22 +344,22 @@ public class AplicationView {
         });
 
 		TableColumn<UnitatFormativa, String> nomColumn = new TableColumn<>("Nom");
-		nomColumn.setMinWidth(120);
-		nomColumn.setMaxWidth(120);
+		nomColumn.setMinWidth(130);
+		nomColumn.setMaxWidth(130);
 		TableColumn<UnitatFormativa, String> horesColumn = new TableColumn<>("Hores");
-		horesColumn.setMinWidth(110);
-		horesColumn.setMaxWidth(110);
+		horesColumn.setMinWidth(130);
+		horesColumn.setMaxWidth(130);
 		TableColumn<UnitatFormativa, String> duradaColumn = new TableColumn<>("Durada");
-		duradaColumn.setMinWidth(110);
-		duradaColumn.setMaxWidth(110);
+		duradaColumn.setMinWidth(130);
+		duradaColumn.setMaxWidth(130);
 		TableColumn<UnitatFormativa, String> iniciColumn = new TableColumn<>("Data inici");
-		iniciColumn.setMinWidth(120);
-		iniciColumn.setMaxWidth(120);
+		iniciColumn.setMinWidth(130);
+		iniciColumn.setMaxWidth(130);
 		TableColumn<UnitatFormativa, String> fiColumn = new TableColumn<>("Data fi");
-		fiColumn.setMinWidth(120);
-		fiColumn.setMaxWidth(120);
+		fiColumn.setMinWidth(130);
+		fiColumn.setMaxWidth(130);
 
-		nomColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
+		/*nomColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
 		horesColumn.setCellValueFactory(new Callback<CellDataFeatures<UnitatFormativa, String>, ObservableValue<String>>(){
 
 			@Override
@@ -410,10 +409,10 @@ public class AplicationView {
 					return null;
 				}
 			}
-		});
+		});*/
 		tableUF.getColumns().addAll(nomColumn, horesColumn, duradaColumn, iniciColumn, fiColumn);
-		tableUF.setMinSize(580, 100);
-		tableUF.setMaxSize(580, 100);
+		tableUF.setMinSize(650, 100);
+		tableUF.setMaxSize(650, 100);
 		gridPane.add(tableUF, 0, 2);
 
 		if (uf!=null) {
@@ -428,22 +427,22 @@ public class AplicationView {
 		tableNF.setEditable(true);
 
 		TableColumn<NucliFormatiu, String> nomNFColumn = new TableColumn<>("Nom");
-		nomNFColumn.setMinWidth(120);
-		nomNFColumn.setMaxWidth(120);
+		nomNFColumn.setMinWidth(130);
+		nomNFColumn.setMaxWidth(130);
 		TableColumn<NucliFormatiu, String> horesNFColumn = new TableColumn<>("Hores");
-		horesNFColumn.setMinWidth(110);
-		horesNFColumn.setMaxWidth(110);
+		horesNFColumn.setMinWidth(130);
+		horesNFColumn.setMaxWidth(130);
 		TableColumn<NucliFormatiu, String> duradaNFColumn = new TableColumn<>("Durada");
-		duradaNFColumn.setMinWidth(110);
-		duradaNFColumn.setMaxWidth(110);
+		duradaNFColumn.setMinWidth(130);
+		duradaNFColumn.setMaxWidth(130);
 		TableColumn<NucliFormatiu, String> iniciNFColumn = new TableColumn<>("Data inici");
-		iniciNFColumn.setMinWidth(120);
-		iniciNFColumn.setMaxWidth(120);
+		iniciNFColumn.setMinWidth(130);
+		iniciNFColumn.setMaxWidth(130);
 		TableColumn<NucliFormatiu, String> fiNFColumn = new TableColumn<>("Data fi");
-		fiNFColumn.setMinWidth(120);
-		fiNFColumn.setMaxWidth(120);
+		fiNFColumn.setMinWidth(130);
+		fiNFColumn.setMaxWidth(130);
 
-		nomNFColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
+		/*nomNFColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
 		horesNFColumn.setCellValueFactory(new Callback<CellDataFeatures<NucliFormatiu, String>, ObservableValue<String>>(){
 
 			@Override
@@ -493,10 +492,10 @@ public class AplicationView {
 					return null;
 				}
 			}
-		});
+		});*/
 		tableNF.getColumns().addAll(nomNFColumn, horesNFColumn, duradaNFColumn, iniciNFColumn, fiNFColumn);
-		tableNF.setMinSize(580, 100);
-		tableNF.setMaxSize(580, 100);
+		tableNF.setMinSize(650, 100);
+		tableNF.setMaxSize(650, 100);
 		gridPane.add(tableNF, 0, 3);
 
 		return scene;
@@ -504,20 +503,22 @@ public class AplicationView {
 
 	private static Scene ufScene(UnitatFormativa unitatFormativa) {
 		GridPane gridPane = new GridPane();
-		Scene scene = new Scene(gridPane, 640, 400);
-		gridPane.setVgap(20);
+		Scene scene = new Scene(gridPane, 711, 400);
+		gridPane.setVgap(10);
 		gridPane.setHgap(20);
 		gridPane.setPadding(new Insets(20,20,20,20));
 
 		Text titolText = new Text("UNITAT FORMATIVA X");
+		titolText.setStyle("-fx-font-size: 16");
 		HBox hbox0 = new HBox();
 		hbox0.getChildren().add(titolText);
 		hbox0.setPadding(new Insets(0,200,0,120));
-		gridPane.add(hbox0, 0, 0);
+		gridPane.add(hbox0, 1, 0);
 		GridPane.setColumnSpan(hbox0, 4);
 		
 		HBox navHbox = new HBox(15);
 		gridPane.add(navHbox, 0, 1);
+		GridPane.setColumnSpan(navHbox, 4);
 
 		Text resumText = new Text("Resum");
 		Separator sep = new Separator();
@@ -573,6 +574,7 @@ public class AplicationView {
 				sep = new Separator();
 				sep.setOrientation(Orientation.VERTICAL);
 				navHbox.getChildren().addAll(newText, sep);
+				GridPane.setColumnSpan(navHbox, 4);
 				newText.setOnMouseClicked(new EventHandler<Event>() {
 
 					@Override
@@ -602,9 +604,11 @@ public class AplicationView {
 		}
 		comboBox.setItems(nfStringList);
 		gridPane.add(comboBox, 0, 2);
+		GridPane.setColumnSpan(comboBox, 2);
 		
 		TextField nomText = new TextField();
-		gridPane.add(nomText, 1, 2);
+		GridPane.setColumnSpan(nomText, 2);
+		gridPane.add(nomText, 2, 2);
 		
 		Label hLabel = new Label("Hores");
 		gridPane.add(hLabel, 0, 3);
@@ -625,6 +629,7 @@ public class AplicationView {
 		gridPane.add(fiTextField, 5, 3);
 		
 		Text actText = new Text("Activitats");
+		actText.setStyle("-fx-font-size: 15");
 		gridPane.add(actText, 0, 4);
 		
 		Label nomActLabel = new Label("Nom");
@@ -646,40 +651,48 @@ public class AplicationView {
 		gridPane.add(descActTextField, 5, 5);
 		
 		Text resApreText = new Text("Resultat d'aprenentatge");
+		resApreText.setStyle("-fx-font-size: 15");
+		GridPane.setColumnSpan(resApreText, 3);
 		gridPane.add(resApreText, 0, 6);
 		
 		Label nomResLabel = new Label("Nom");
-		gridPane.add(nomResLabel, 0, 6);
+		gridPane.add(nomResLabel, 0, 7);
 		
 		TextField nomResField = new TextField();
-		gridPane.add(nomResField, 1, 6);
+		gridPane.add(nomResField, 1, 7);
 		
-		Label dataLabel = new Label("Data Lliurament");
-		gridPane.add(dataLabel, 2, 6);
+		Label dataLabel = new Label("Data Ll.");
+		gridPane.add(dataLabel, 2, 7);
 		
 		TextField dataTextField = new TextField();
-		gridPane.add(dataTextField, 3, 6);
+		gridPane.add(dataTextField, 3, 7);
 		
 		Label percLabel = new Label("Percentatge");
-		gridPane.add(percLabel, 4, 6);
+		gridPane.add(percLabel, 4, 7);
 		
 		TextField percTextField = new TextField();
-		gridPane.add(percTextField, 5, 6);
+		gridPane.add(percTextField, 5, 7);
 		
 		Text contText = new Text("Continguts");
-		gridPane.add(contText, 0, 7);
+		contText.setStyle("-fx-font-size: 15");
+		GridPane.setColumnSpan(contText, 3);
+		gridPane.add(contText, 0, 8);
 		
-		TextArea contArea = new TextArea();
-		gridPane.add(contArea, 0, 8);
+		TextField contArea = new TextField();
+		GridPane.setColumnSpan(contArea, 3);
+		gridPane.add(contArea, 0, 10);
 		
 		Text critText = new Text("Criteris d'avaluació");
-		gridPane.add(critText, 3, 7);
+		GridPane.setColumnSpan(critText, 3);
+		gridPane.add(critText, 0, 9);
 		
-		TextArea critArea = new TextArea();
-		gridPane.add(critArea, 3, 8);
+		TextField critArea = new TextField();
+		GridPane.setColumnSpan(critArea, 3);
+		gridPane.add(critArea, 3, 10);
 		
 		Text instText = new Text("Instrument d'avaluació");
-		gridPane.add(instText, 0, 9);
+		GridPane.setColumnSpan(instText, 3);
+		gridPane.add(instText, 3, 9);
 		
 		return scene;
 	}
