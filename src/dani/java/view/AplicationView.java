@@ -1,7 +1,5 @@
 package dani.java.view;
 
-import java.text.SimpleDateFormat;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -10,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -33,34 +32,32 @@ public class AplicationView {
 	public static UnitatsFormatives ufs = new UnitatsFormatives();
 	public static UnitatFormativa uf;
 	private static Stage stage = Main.stage;
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	//private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private static ObservableList<UnitatFormativa> ufList = FXCollections.observableArrayList();
 	private static ObservableList<NucliFormatiu> nfList = FXCollections.observableArrayList();
 	private static ObservableList<String> nfStringList = FXCollections.observableArrayList();
-	private static NucliFormatiu nf;
+	//private static NucliFormatiu nf;
 	static Screen screen = Screen.getPrimary();
 	static Rectangle2D bounds = screen.getVisualBounds();
+	static String currPage = null; 
 
-	public static Scene resumScene() {
-		GridPane gridPane = new GridPane();
-		gridPane.setVgap(20);
-		gridPane.setHgap(20);
-		gridPane.setPadding(new Insets(20,20,20,20));
-		Scene scene = new Scene(gridPane, 711, 400);
-
-		Text titolText = new Text("PROGRAMACIÓ DE L'ÀULA");
-		titolText.setStyle("-fx-font-size: 16");
-		HBox hbox0 = new HBox();
-		hbox0.getChildren().add(titolText);
-		hbox0.setPadding(new Insets(0,200,0,200));
-		gridPane.add(hbox0, 0, 0);
-		GridPane.setColumnSpan(hbox0, 4);
-
+	/*
+	 * Aquest metode crea un objecte HBox que utilitzarem com
+	 * a barra de navegació per desplaçar-nos entre les diferents
+	 * pantalles de l'aplicació
+	 */
+	public static Object navBar() {
 		HBox navHbox = new HBox(15);
-		gridPane.add(navHbox, 0, 1);
-
 		Text resumText = new Text("Resum");
+		if (currPage.equals("resum")) {
+			resumText.setStyle("-fx-fill: red;");
+		} else {
+			resumText.setStyle("-fx-fill: blue;");
+		}
 		Separator sep = new Separator();
+		sep.setOrientation(Orientation.VERTICAL);
+		navHbox.getChildren().add(sep);
+		sep = new Separator();
 		sep.setOrientation(Orientation.VERTICAL);
 		navHbox.getChildren().addAll(resumText, sep);
 		resumText.setOnMouseClicked(new EventHandler<Event>() {
@@ -84,6 +81,11 @@ public class AplicationView {
 		});
 
 		Text modulText = new Text("Mòdul");
+		if (currPage.equals("modul")) {
+			modulText.setStyle("-fx-fill: red;");
+		} else {
+			modulText.setStyle("-fx-fill: blue;");
+		}
 		modulText.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
@@ -110,6 +112,11 @@ public class AplicationView {
 		if (!(ufs == null)) {
 			for (UnitatFormativa uf:ufs.getUnitatFormativa()) {
 				Text newText = new Text(uf.getNom());
+				if (currPage.equals("uf")) {
+					newText.setStyle("-fx-fill: red;");
+				} else {
+					newText.setStyle("-fx-fill: blue;");
+				}
 				sep = new Separator();
 				sep.setOrientation(Orientation.VERTICAL);
 				navHbox.getChildren().addAll(newText, sep);
@@ -135,6 +142,43 @@ public class AplicationView {
 				});
 			}
 		}
+		HBox bigHBox = new HBox();
+		Button loadButton = new Button("Carregar");
+		loadButton.setMinWidth(75);
+		Button saveButton = new Button("Desar");
+		saveButton.setMinWidth(75);
+		HBox smallHBox = new HBox(20);
+		smallHBox.getChildren().addAll( loadButton, saveButton);
+		bigHBox.getChildren().addAll(navHbox, smallHBox);
+		navHbox.setPrefWidth(700);
+		bigHBox.setMaxWidth(stage.getWidth()-50);
+		return bigHBox;
+	}
+	
+	/*
+	 * Retorna l'escena de la pantalla de resum
+	 * Es la pantalla que es carrega automaticament
+	 * al arrencar el programa
+	 */
+	public static Scene resumScene() {
+		currPage = "resum";
+		GridPane gridPane = new GridPane();
+		gridPane.setVgap(20);
+		gridPane.setHgap(20);
+		gridPane.setPadding(new Insets(0,20,0,20));
+		Scene scene = new Scene(gridPane, 711, 400);
+
+		Text titolText = new Text("PROGRAMACIÓ DE L'ÀULA");
+		titolText.setStyle("-fx-font-size: 16");
+		HBox hbox0 = new HBox();
+		hbox0.getChildren().add(titolText);
+		hbox0.setPadding(new Insets(0,200,0,200));
+		gridPane.add(hbox0, 0, 0);
+		GridPane.setColumnSpan(hbox0, 4);
+
+		HBox navHbox = (HBox) navBar();
+		GridPane.setColumnSpan(navHbox, 6);
+		gridPane.add(navHbox, 0, 1);
 
 		Label famLabel = new Label("Família");
 		gridPane.add(famLabel, 0, 2);
@@ -222,13 +266,17 @@ public class AplicationView {
 		return scene;
 	}
 
+	/*
+	 * Retorna l'escena de la pantalla del modul
+	 */
 	@SuppressWarnings("unchecked")
 	private static Scene modulScene() {
+		currPage = "modul";
 		GridPane gridPane = new GridPane();
 		Scene scene = new Scene(gridPane, 711, 400);
 		gridPane.setVgap(20);
 		gridPane.setHgap(20);
-		gridPane.setPadding(new Insets(20,20,20,20));
+		gridPane.setPadding(new Insets(0,20,0,20));
 
 		Text titolText = new Text("RELACIÓ D'UNITATS FORMATIVES I MÒDULS FORMATIUS");
 		titolText.setStyle("-fx-font-size: 16");
@@ -238,85 +286,8 @@ public class AplicationView {
 		gridPane.add(hbox0, 0, 0);
 		GridPane.setColumnSpan(hbox0, 4);
 
-		HBox navHbox = new HBox(15);
+		HBox navHbox = (HBox) navBar();
 		gridPane.add(navHbox, 0, 1);
-
-		Text resumText = new Text("Resum");
-		Separator sep = new Separator();
-		sep.setOrientation(Orientation.VERTICAL);
-		navHbox.getChildren().addAll(resumText, sep);
-		resumText.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				stage.setScene(resumScene());
-				if (stage.isMaximized()) {
-					stage.setX(bounds.getMinX());
-					stage.setY(bounds.getMinY());
-					stage.setWidth(bounds.getWidth());
-					stage.setHeight(bounds.getHeight());
-					Scale scale = new Scale();
-					scale.setPivotX(0);
-					scale.setPivotY(0);
-					scale.setX(3);
-					scale.setY(3);
-					stage.getScene().getRoot().getTransforms().setAll(scale);
-				}
-			}
-		});
-
-		Text modulText = new Text("Mòdul");
-		modulText.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				stage.setScene(modulScene());
-				if (stage.isMaximized()) {
-					stage.setX(bounds.getMinX());
-					stage.setY(bounds.getMinY());
-					stage.setWidth(bounds.getWidth());
-					stage.setHeight(bounds.getHeight());
-					Scale scale = new Scale();
-					scale.setPivotX(0);
-					scale.setPivotY(0);
-					scale.setX(3);
-					scale.setY(3);
-					stage.getScene().getRoot().getTransforms().setAll(scale);
-				}
-			}
-		});
-		sep = new Separator();
-		sep.setOrientation(Orientation.VERTICAL);
-		navHbox.getChildren().addAll(modulText, sep);
-
-		if (!(ufs == null)) {
-			for (UnitatFormativa uf:ufs.getUnitatFormativa()) {
-				Text newText = new Text(uf.getNom());
-				sep = new Separator();
-				sep.setOrientation(Orientation.VERTICAL);
-				navHbox.getChildren().addAll(newText, sep);
-				GridPane.setColumnSpan(navHbox, 4);
-				newText.setOnMouseClicked(new EventHandler<Event>() {
-
-					@Override
-					public void handle(Event event) {
-						stage.setScene(ufScene(uf));
-						if (stage.isMaximized()) {
-							stage.setX(bounds.getMinX());
-							stage.setY(bounds.getMinY());
-							stage.setWidth(bounds.getWidth());
-							stage.setHeight(bounds.getHeight());
-							Scale scale = new Scale();
-							scale.setPivotX(0);
-							scale.setPivotY(0);
-							scale.setX(3);
-							scale.setY(3);
-							stage.getScene().getRoot().getTransforms().setAll(scale);
-						}
-					}
-				});
-			}
-		}
 
 		if (ufs != null) {
 			for (UnitatFormativa uf:ufs.getUnitatFormativa()) {
@@ -325,9 +296,13 @@ public class AplicationView {
 			}
 		}
 
+		
+		//Taula de UFs, mostra el contingut de les UFs que hi ha creades.
 		TableView<UnitatFormativa> tableUF = new TableView<UnitatFormativa>();
 		tableUF.setItems(ufList);
 		tableUF.setEditable(true);
+		
+		//Event que selecciona una UF al clicar sobre la seva linia, i mostra els nuclis formatius d'aquesta uf a la seguent taula
 		tableUF.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent x) {
@@ -359,6 +334,9 @@ public class AplicationView {
 		fiColumn.setMinWidth(130);
 		fiColumn.setMaxWidth(130);
 
+		//Com els objectes no estan poblats completament, el mapeig per les taules esta comentat, si s'instancien objectes amb dades a tots els
+		//seus camps, descomentant el següent codi es veuran les dades de les UFs a les taules
+		
 		/*nomColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
 		horesColumn.setCellValueFactory(new Callback<CellDataFeatures<UnitatFormativa, String>, ObservableValue<String>>(){
 
@@ -442,6 +420,9 @@ public class AplicationView {
 		fiNFColumn.setMinWidth(130);
 		fiNFColumn.setMaxWidth(130);
 
+		//Com els objectes no estan poblats completament, el mapeig per les taules esta comentat, si s'instancien objectes amb dades a tots els
+		//seus camps, descomentant el següent codi es veuran les dades dels NFs a les taules
+		
 		/*nomNFColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
 		horesNFColumn.setCellValueFactory(new Callback<CellDataFeatures<NucliFormatiu, String>, ObservableValue<String>>(){
 
@@ -501,12 +482,21 @@ public class AplicationView {
 		return scene;
 	}
 
+	/*
+	 * Retorna l'escena de la pantalla de cada UF
+	 * cadascun dels botons i les seves pantalles respectives es
+	 * generen dinàmicament depenent de la quantitat de UFs que
+	 * hi hagi dins l'objecte ufs. Tinc dos UFs creades en el main
+	 * pero nomes li paso un al objecte ufs, per veure el canvi
+	 * descomentar la linia que l'insereix.
+	 */
 	private static Scene ufScene(UnitatFormativa unitatFormativa) {
+		currPage = "uf";
 		GridPane gridPane = new GridPane();
 		Scene scene = new Scene(gridPane, 711, 400);
 		gridPane.setVgap(10);
 		gridPane.setHgap(20);
-		gridPane.setPadding(new Insets(20,20,20,20));
+		gridPane.setPadding(new Insets(0,20,0,20));
 
 		Text titolText = new Text("UNITAT FORMATIVA X");
 		titolText.setStyle("-fx-font-size: 16");
@@ -516,87 +506,11 @@ public class AplicationView {
 		gridPane.add(hbox0, 1, 0);
 		GridPane.setColumnSpan(hbox0, 4);
 		
-		HBox navHbox = new HBox(15);
+		HBox navHbox = (HBox) navBar();
 		gridPane.add(navHbox, 0, 1);
-		GridPane.setColumnSpan(navHbox, 4);
-
-		Text resumText = new Text("Resum");
-		Separator sep = new Separator();
-		sep.setOrientation(Orientation.VERTICAL);
-		navHbox.getChildren().addAll(resumText, sep);
-		resumText.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				stage.setScene(resumScene());
-				if (stage.isMaximized()) {
-					stage.setX(bounds.getMinX());
-					stage.setY(bounds.getMinY());
-					stage.setWidth(bounds.getWidth());
-					stage.setHeight(bounds.getHeight());
-					Scale scale = new Scale();
-					scale.setPivotX(0);
-					scale.setPivotY(0);
-					scale.setX(3);
-					scale.setY(3);
-					stage.getScene().getRoot().getTransforms().setAll(scale);
-				}
-			}
-		});
-
-		Text modulText = new Text("Mòdul");
-		modulText.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				stage.setScene(modulScene());
-				if (stage.isMaximized()) {
-					stage.setX(bounds.getMinX());
-					stage.setY(bounds.getMinY());
-					stage.setWidth(bounds.getWidth());
-					stage.setHeight(bounds.getHeight());
-					Scale scale = new Scale();
-					scale.setPivotX(0);
-					scale.setPivotY(0);
-					scale.setX(3);
-					scale.setY(3);
-					stage.getScene().getRoot().getTransforms().setAll(scale);
-				}
-			}
-		});
-		sep = new Separator();
-		sep.setOrientation(Orientation.VERTICAL);
-		navHbox.getChildren().addAll(modulText, sep);
-
-		if (!(ufs == null)) {
-			for (UnitatFormativa uf:ufs.getUnitatFormativa()) {
-				Text newText = new Text(uf.getNom());
-				sep = new Separator();
-				sep.setOrientation(Orientation.VERTICAL);
-				navHbox.getChildren().addAll(newText, sep);
-				GridPane.setColumnSpan(navHbox, 4);
-				newText.setOnMouseClicked(new EventHandler<Event>() {
-
-					@Override
-					public void handle(Event event) {
-						stage.setScene(ufScene(uf));
-						if (stage.isMaximized()) {
-							stage.setX(bounds.getMinX());
-							stage.setY(bounds.getMinY());
-							stage.setWidth(bounds.getWidth());
-							stage.setHeight(bounds.getHeight());
-							Scale scale = new Scale();
-							scale.setPivotX(0);
-							scale.setPivotY(0);
-							scale.setX(3);
-							scale.setY(3);
-							stage.getScene().getRoot().getTransforms().setAll(scale);
-						}
-					}
-				});
-			}
-		}
+		GridPane.setColumnSpan(navHbox, 8);
 		
+		//Aquest cmobobox s'utilitza per seleccionar un dels NFs de la UF que s'esta mostrant
 		ComboBox<String> comboBox = new ComboBox<>();
 		nfStringList.clear();
 		for (NucliFormatiu nucliFormatiu:uf.getNuclisFormatius().getNucliFormatiu()) {

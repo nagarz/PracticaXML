@@ -29,6 +29,7 @@ public class Main extends Application {
 			
 			stage = primaryStage;
 			
+			//creem dues UFs manualment i les inserim a l'objecte UnitatsFormatives
 			UnitatFormativa uf1 = new UnitatFormativa();
 			NuclisFormatius nfs = new NuclisFormatius();
 			uf1.setNuclisFormatius(nfs);
@@ -52,6 +53,8 @@ public class Main extends Application {
 			uf2nf2.setId("UF2NF2");
 			uf2.getNuclisFormatius().getNucliFormatiu().add(uf2nf1);
 			uf2.getNuclisFormatius().getNucliFormatiu().add(uf2nf2);
+			
+			// Per inserir una segona UF manualment, descomentar la següent linia.
 			//AplicationView.ufs.getUnitatFormativa().add(uf2);
 			
 			stage.setWidth(711);
@@ -60,7 +63,11 @@ public class Main extends Application {
 			stage.setMinHeight(400);
 			stage.setScene(AplicationView.resumScene());
 			stage.show();
-			stage.maximizedProperty().addListener(new ChangeListener<Boolean>() {
+			
+			//codi per escalar el contingut d'una pantalla al maximitzar la finestra. Obsolet després d'inserir el listener per aumentar 
+			//la finestra arrosegant un dels costats de la finestra
+			
+			/*stage.maximizedProperty().addListener(new ChangeListener<Boolean>() {
 				public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
 					Scale scale = new Scale();
 					scale.setPivotX(0);
@@ -68,13 +75,15 @@ public class Main extends Application {
 					if (t1) {
 						x = 3;
 					} else {
-						x = 1;
+						x = x;
 					}
 					scale.setX(x);
 					scale.setY(x);
 					stage.getScene().getRoot().getTransforms().setAll(scale);
 				}
-			});
+			});*/
+			
+			//Aquests son els dos listeners que escalen el contingut al augmentar la mida de la finestra
 			stage.widthProperty().addListener(new ChangeListener<Number>() {
 
 				@Override
@@ -82,13 +91,6 @@ public class Main extends Application {
 						ObservableValue<? extends Number> observable,
 						Number oldValue, Number newValue) {
 					stage.setHeight(stage.getWidth()/ratio);
-//					Scale scale = new Scale();
-//					scale.setPivotX(0);
-//					scale.setPivotY(0);
-//					if (x<1) x = 1;
-//					scale.setX(x);
-//					scale.setY(x);
-//					stage.getScene().getRoot().getTransforms().setAll(scale);
 				}
 			});
 			stage.heightProperty().addListener(new ChangeListener<Number>() {
