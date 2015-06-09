@@ -104,7 +104,6 @@ public class Main extends Application {
 					scale.setPivotX(0);
 					scale.setPivotY(0);
 					x = x * (newValue.doubleValue()/oldValue.doubleValue());
-					System.out.println(x + " " + stage.getWidth() + " " + stage.getHeight());
 					scale.setX(x);
 					scale.setY(x);
 					stage.getScene().getRoot().getTransforms().setAll(scale);
